@@ -1,6 +1,6 @@
 FROM node:18-slim
 
-# Install Chromium dependencies
+# Install dependencies for Chromium
 RUN apt-get update && apt-get install -y \
   wget \
   ca-certificates \
@@ -25,18 +25,13 @@ RUN apt-get update && apt-get install -y \
   --no-install-recommends && \
   apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
 WORKDIR /app
 
-# Install dependencies
 COPY package*.json ./
 RUN npm install
 
-# Copy rest of the app
 COPY . .
 
-# Expose app port
 EXPOSE 3000
 
-# Start the server
 CMD ["node", "server.js"]
